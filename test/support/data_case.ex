@@ -24,6 +24,7 @@ defmodule Kolektanto.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Kolektanto.DataCase
+      import Kolektanto.Factory
     end
   end
 
