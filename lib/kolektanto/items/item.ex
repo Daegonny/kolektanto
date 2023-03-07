@@ -3,6 +3,14 @@ defmodule Kolektanto.Item do
   import Ecto.Changeset
   alias Kolektanto.Tag
 
+  @type t() :: %__MODULE__{
+          id: binary(),
+          name: String.t(),
+          tags: list(Tag.t()),
+          inserted_at: NaiveDateTime.t(),
+          updated_at: NaiveDateTime.t()
+        }
+
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "items" do
     field :name
