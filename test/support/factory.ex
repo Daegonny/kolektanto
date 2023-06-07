@@ -4,11 +4,9 @@ defmodule Kolektanto.Factory do
   alias Kolektanto.{Item, Tag}
 
   def item_factory do
-    tags_quantity = Enum.random(1..10)
-
     %Item{
       name: Vehicle.model(),
-      tags: Enum.map(1..tags_quantity, fn _ -> build(:tag) end)
+      tags: Enum.map(1..2, fn _ -> build(:tag) end)
     }
   end
 
