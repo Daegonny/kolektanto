@@ -1,4 +1,7 @@
-defmodule Kolektanto.Tags do
+defmodule Kolektanto.Tag.Tags do
+  @moduledoc """
+  Access tag data
+  """
   alias Kolektanto.Repo
   alias Kolektanto.Tag
 
