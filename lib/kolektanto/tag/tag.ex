@@ -1,4 +1,7 @@
 defmodule Kolektanto.Tag do
+  @moduledoc """
+  Tag entity
+  """
   use Ecto.Schema
 
   @type t() :: %__MODULE__{

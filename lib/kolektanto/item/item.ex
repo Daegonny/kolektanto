@@ -1,4 +1,7 @@
 defmodule Kolektanto.Item do
+  @moduledoc """
+  Item entity
+  """
   use Ecto.Schema
   import Ecto.Changeset
   alias Kolektanto.Tag
