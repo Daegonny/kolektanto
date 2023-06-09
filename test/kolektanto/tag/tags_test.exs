@@ -17,6 +17,15 @@ defmodule Kolektanto.Tag.TagsTest do
       assert MapSet.equal?(unique_names_set, tag_names_set)
     end
 
+    test "tags are created only once" do
+      tag_names = ["large", "green", "expansive"]
+
+      tags_1 = Tags.upsert_all(tag_names) |> MapSet.new()
+      tags_2 = Tags.upsert_all(tag_names) |> MapSet.new()
+
+      assert MapSet.equal?(tags_1, tags_2)
+    end
+
     test "returns empty list when a list of names is not received" do
       assert [] = Tags.upsert_all("red")
     end
