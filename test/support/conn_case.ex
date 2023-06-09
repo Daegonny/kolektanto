@@ -28,6 +28,8 @@ defmodule KolektantoWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint KolektantoWeb.Endpoint
+
+      use KolektantoWeb, :verified_routes
     end
   end
 

@@ -5,9 +5,8 @@ defmodule Kolektanto.MixProject do
     [
       app: :kolektanto,
       version: "0.1.0",
-      elixir: "~> 1.12",
+      elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -39,9 +38,10 @@ defmodule Kolektanto.MixProject do
       {:faker, "~> 0.17", only: :test},
       {:jason, "~> 1.2"},
       {:mox, "~> 1.0"},
-      {:phoenix, "~> 1.6.10"},
+      {:phoenix, "~> 1.7.3"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_live_dashboard, "~> 0.6"},
+      {:phoenix_view, "~> 2.0"},
       {:plug_cowboy, "~> 2.5"},
       {:postgrex, ">= 0.0.0"},
       {:telemetry_metrics, "~> 0.6"},

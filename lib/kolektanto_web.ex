@@ -17,12 +17,15 @@ defmodule KolektantoWeb do
   and import those modules here.
   """
 
+  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
+
   def controller do
     quote do
       use Phoenix.Controller, namespace: KolektantoWeb
 
       import Plug.Conn
       alias KolektantoWeb.Router.Helpers, as: Routes
+      unquote(verified_routes())
     end
   end
 
@@ -38,6 +41,7 @@ defmodule KolektantoWeb do
 
       # Include shared imports and aliases for views
       unquote(view_helpers())
+      unquote(verified_routes())
     end
   end
 
@@ -71,5 +75,14 @@ defmodule KolektantoWeb do
   """
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
+  end
+
+  def verified_routes do
+    quote do
+      use Phoenix.VerifiedRoutes,
+        endpoint: KolektantoWeb.Endpoint,
+        router: KolektantoWeb.Router,
+        statics: KolektantoWeb.static_paths()
+    end
   end
 end
