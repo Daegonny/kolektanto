@@ -6,3 +6,4 @@ Ecto.Adapters.SQL.Sandbox.mode(Kolektanto.Repo, :manual)
 
 Mox.defmock(TagsMock, for: Kolektanto.Tag.Tags.Behaviour)
 Mox.defmock(ItemsMock, for: Kolektanto.Item.Items.Behaviour)
+Mox.defmock(ItemContextMock, for: Kolektanto.Item.Context.Behaviour)

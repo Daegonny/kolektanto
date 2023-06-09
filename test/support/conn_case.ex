@@ -23,6 +23,7 @@ defmodule KolektantoWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import KolektantoWeb.ConnCase
+      import Kolektanto.Factory
 
       alias KolektantoWeb.Router.Helpers, as: Routes
 
