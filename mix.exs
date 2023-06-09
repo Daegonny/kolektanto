@@ -33,18 +33,19 @@ defmodule Kolektanto.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:ecto_sql, "~> 3.6"},
       {:ex_machina, "~> 2.7.0", only: :test},
       {:faker, "~> 0.17", only: :test},
       {:jason, "~> 1.2"},
+      {:mox, "~> 1.0"},
       {:phoenix, "~> 1.6.10"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_live_dashboard, "~> 0.6"},
       {:plug_cowboy, "~> 2.5"},
       {:postgrex, ">= 0.0.0"},
       {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 1.0"},
-      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
+      {:telemetry_poller, "~> 1.0"}
     ]
   end
 
