@@ -9,17 +9,12 @@ defmodule Kolektanto.Item.Items.Behaviour do
   @type item() :: map()
 
   @doc """
-  Create item
+  Creates an item with tags
   """
-  @callback create(item) :: {:ok, Item.t()} | {:error, Changeset.t()}
+  @callback create(item(), list(Tag.t())) :: {:ok, Item.t()} | {:error, Changeset.t()}
 
   @doc """
-  Create item with tags
-  """
-  @callback create(item, list(Tag.t())) :: {:ok, Item.t()} | {:error, Changeset.t()}
-
-  @doc """
-  Get item by id
+  Gets item by id
   """
   @callback get(binary()) :: {:ok, Item.t()} | {:error, :not_found}
 end

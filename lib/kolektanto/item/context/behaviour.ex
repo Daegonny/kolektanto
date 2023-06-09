@@ -3,15 +3,12 @@ defmodule Kolektanto.Item.Context.Behaviour do
   Behaviours for item service manipulation
   """
   alias Kolektanto.Item
+  alias Kolektanto.Error.FieldValidationError
   @type item() :: map()
 
   @doc """
-  Create an item
+  Creates an item
   """
-  @callback create(item()) :: {:ok, Item.t()} | {:error, Ecto.Changeset}
-
-  @doc """
-  Create an item given a list of tag names
-  """
-  @callback create(item(), list(String.t())) :: {:ok, Item.t()} | {:error, Ecto.Changeset}
+  @callback create(item(), list(String.t())) ::
+              {:ok, Item.t()} | {:error, :field_validation, list(FieldValidationError.t())}
 end
