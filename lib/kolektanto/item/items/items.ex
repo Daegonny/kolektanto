@@ -7,13 +7,8 @@ defmodule Kolektanto.Item.Items do
   alias Kolektanto.Tag
 
   @behaviour Kolektanto.Item.Items.Behaviour
-  @type item() :: map()
 
-  @impl true
-  @spec create(item()) :: {:ok, Item.t()} | {:error, Ecto.Changeset.t()}
-  def create(item) do
-    create(item, [])
-  end
+  @type item() :: map()
 
   @impl true
   @spec create(item(), list(Tag.t())) :: {:ok, Item.t()} | {:error, Ecto.Changeset.t()}
@@ -32,30 +27,6 @@ defmodule Kolektanto.Item.Items do
       nil -> {:error, :not_found}
     end
   end
-
-  # def filter_with_any_tags(tag_names) do
-  #   from(item in Item, as: :item, distinct: true)
-  #   |> join(:inner, [item: item], tag in assoc(item, :tags), as: :tag)
-  #   |> where([tag: tag], tag.name in ^tag_names)
-  #   |> preload(:tags)
-  #   |> Repo.all()
-  #   |> then(fn items -> {:ok, items} end)
-  # end
-
-  # def filter_with_all_tags(tag_names) do
-  #   tags_count = length(tag_names)
-
-  #   from(item in Item, as: :item)
-  #   |> join(:inner, [item: item], tag in assoc(item, :tags), as: :tag)
-  #   |> where([tag: tag], tag.name in ^tag_names)
-  #   |> group_by([item: item], item.id)
-  #   |> having([tag: tag], count(tag.id) == ^tags_count)
-  #   |> preload(:tags)
-  #   |> IO.inspect()
-  #   |> Repo.all()
-  #   |> IO.inspect()
-  #   |> then(fn items -> {:ok, items} end)
-  # end
 
   defp preload_tags(item), do: Repo.preload(item, :tags)
 end

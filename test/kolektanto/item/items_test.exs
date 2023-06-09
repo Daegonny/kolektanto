@@ -4,22 +4,6 @@ defmodule Kolektanto.Item.ItemsTest do
   alias Kolektanto.Item
   alias Kolektanto.Item.Items
 
-  describe "create/1" do
-    test "creates an item" do
-      params = %{name: name = "item 1"}
-      assert {:ok, %Item{} = item} = Items.create(params)
-
-      assert item.name == name
-    end
-
-    test "returns errors when name is not given" do
-      assert {:error, changeset} = Items.create(%{})
-
-      refute changeset.valid?
-      assert [name: {"can't be blank", [validation: :required]}] = changeset.errors
-    end
-  end
-
   describe "create/2" do
     test "creates an item" do
       tags = insert_list(3, :tag)
