@@ -9,7 +9,7 @@ defmodule Kolektanto.Item do
   @type t() :: %__MODULE__{
           id: binary(),
           name: String.t(),
-          tags: list(Tag.t()),
+          tags: list(Tag.t()) | Ecto.Association.NotLoaded.t(),
           inserted_at: NaiveDateTime.t(),
           updated_at: NaiveDateTime.t()
         }
