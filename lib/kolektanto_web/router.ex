@@ -7,6 +7,8 @@ defmodule KolektantoWeb.Router do
 
   scope "/api", KolektantoWeb do
     pipe_through :api
+
+    get "/items/:id", ItemController, :show
   end
 
   # Enables LiveDashboard only for development
