@@ -1,4 +1,7 @@
 defmodule Kolektanto.Factory do
+  @moduledoc """
+  Factories for application entities
+  """
   use ExMachina.Ecto, repo: Kolektanto.Repo
   alias Faker.{Pokemon, Vehicle}
   alias Kolektanto.{Item, Tag}
