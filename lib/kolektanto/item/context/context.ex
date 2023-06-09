@@ -7,6 +7,11 @@ defmodule Kolektanto.Item.Context do
   @behaviour Kolektanto.Item.Context.Behaviour
 
   @type item() :: map()
+  @type id() :: binary()
+
+  @impl true
+  @spec get(id()) :: {:ok, Item.t()} | {:error, :not_found}
+  def get(id), do: items().get(id)
 
   @impl true
   @spec create(item(), list(String.t())) ::

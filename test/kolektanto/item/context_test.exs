@@ -8,6 +8,20 @@ defmodule Kolektanto.Item.ContextTest do
   alias Kolektanto.Item
   alias Kolektanto.Item.Context
 
+  describe "get/1" do
+    test "returns item when it exists" do
+      id = Faker.UUID.v4()
+      stub(ItemsMock, :get, fn _ -> {:ok, build(:item, id: id)} end)
+      assert {:ok, %Item{id: ^id}} = Context.get(id)
+    end
+
+    test "returns error not found when item does not exist" do
+      id = Faker.UUID.v4()
+      stub(ItemsMock, :get, fn _ -> {:error, :not_found} end)
+      assert {:error, :not_found} = Context.get(id)
+    end
+  end
+
   describe "create/2" do
     test "creates item without tags" do
       name = "item 1"

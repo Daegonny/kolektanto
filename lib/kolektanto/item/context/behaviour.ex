@@ -5,6 +5,12 @@ defmodule Kolektanto.Item.Context.Behaviour do
   alias Kolektanto.Item
   alias Kolektanto.Error.FieldValidationError
   @type item() :: map()
+  @type id() :: binary()
+
+  @doc """
+  Gets an item by id
+  """
+  @callback get(id()) :: {:ok, Item.t()} | {:error, :not_found}
 
   @doc """
   Creates an item
