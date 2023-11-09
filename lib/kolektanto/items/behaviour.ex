@@ -1,9 +1,11 @@
-defmodule Kolektanto.Item.Context.Behaviour do
+defmodule Kolektanto.Items.Behaviour do
   @moduledoc """
-  Behaviours for item service manipulation
+  Behaviours for Items
   """
-  alias Kolektanto.Item
-  alias Kolektanto.Error.FieldValidationError
+
+  alias Kolektanto.Items.Item
+  alias Kolektanto.Errors.FieldValidationError
+
   @type item() :: map()
   @type id() :: binary()
 
@@ -15,6 +17,6 @@ defmodule Kolektanto.Item.Context.Behaviour do
   @doc """
   Creates an item
   """
-  @callback create(item(), list(String.t())) ::
+  @callback save(item(), list(String.t())) ::
               {:ok, Item.t()} | {:error, :field_validation, list(FieldValidationError.t())}
 end

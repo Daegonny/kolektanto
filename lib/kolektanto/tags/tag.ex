@@ -1,4 +1,4 @@
-defmodule Kolektanto.Tag do
+defmodule Kolektanto.Tags.Tag do
   @moduledoc """
   Tag entity
   """

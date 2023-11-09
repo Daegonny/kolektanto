@@ -4,7 +4,8 @@ defmodule Kolektanto.Factory do
   """
   use ExMachina.Ecto, repo: Kolektanto.Repo
   alias Faker.{Pokemon, Vehicle}
-  alias Kolektanto.{Item, Tag}
+  alias Kolektanto.Items.Item
+  alias Kolektanto.Tags.Tag
 
   def item_factory do
     %Item{

@@ -10,7 +10,7 @@ defmodule KolektantoWeb.ItemControllerTest do
       tags = Enum.map(1..3, fn _ -> build(:tag) end)
       tag_names = Enum.map(tags, & &1.name)
 
-      stub(ItemContextMock, :get, fn _ ->
+      stub(ItemsMock, :get, fn _ ->
         {:ok, build(:item, id: id, name: name, tags: tags)}
       end)
 
@@ -22,7 +22,7 @@ defmodule KolektantoWeb.ItemControllerTest do
 
     test "returns 404 when item does not exist", %{conn: conn} do
       id = Faker.UUID.v4()
-      stub(ItemContextMock, :get, fn _ -> {:error, :not_found} end)
+      stub(ItemsMock, :get, fn _ -> {:error, :not_found} end)
 
       assert %{"errors" => [%{"message" => "Not Found"}]} =
                conn

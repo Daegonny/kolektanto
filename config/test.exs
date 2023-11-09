@@ -28,4 +28,3 @@ config :phoenix, :plug_init_mode, :runtime
 
 config :kolektanto, :tags, TagsMock
 config :kolektanto, :items, ItemsMock
-config :kolektanto, :item_context, ItemContextMock

@@ -1,8 +1,8 @@
-defmodule Kolektanto.Error.FieldValidationErrorTest do
+defmodule Kolektanto.Errors.FieldValidationErrorTest do
   @moduledoc false
   use ExUnit.Case, async: true
 
-  alias Kolektanto.Error.FieldValidationError
+  alias Kolektanto.Errors.FieldValidationError
 
   describe "build_from/1" do
     test "returns correct format" do

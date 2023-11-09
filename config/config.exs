@@ -26,9 +26,8 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :kolektanto, :tags, Kolektanto.Tag.Tags
-config :kolektanto, :items, Kolektanto.Item.Items
-config :kolektanto, :item_context, Kolektanto.Item.Context
+config :kolektanto, :tags, Kolektanto.Tags
+config :kolektanto, :items, Kolektanto.Items
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

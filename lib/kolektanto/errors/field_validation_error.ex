@@ -1,4 +1,4 @@
-defmodule Kolektanto.Error.FieldValidationError do
+defmodule Kolektanto.Errors.FieldValidationError do
   @moduledoc """
   Holds a field validation error and its messages
   """

@@ -1,10 +1,10 @@
-defmodule Kolektanto.Item do
+defmodule Kolektanto.Items.Item do
   @moduledoc """
   Item entity
   """
   use Ecto.Schema
   import Ecto.Changeset
-  alias Kolektanto.Tag
+  alias Kolektanto.Tags.Tag
 
   @type t() :: %__MODULE__{
           id: binary(),

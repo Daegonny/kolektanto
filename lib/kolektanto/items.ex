@@ -1,25 +1,27 @@
-defmodule Kolektanto.Item.Context do
+defmodule Kolektanto.Items do
   @moduledoc """
-  Implements behaviours of item context
+  Implements behaviours for Items
   """
-  alias Kolektanto.Item
-  alias Kolektanto.Error.FieldValidationError
-  @behaviour Kolektanto.Item.Context.Behaviour
+  alias Kolektanto.Items.Item
+  alias Kolektanto.Items.ItemRepository
+  alias Kolektanto.Errors.FieldValidationError
+
+  @behaviour Kolektanto.Items.Behaviour
 
   @type item() :: map()
   @type id() :: binary()
 
   @impl true
   @spec get(id()) :: {:ok, Item.t()} | {:error, :not_found}
-  def get(id), do: items().get(id)
+  def get(id), do: ItemRepository.get(id)
 
   @impl true
-  @spec create(item(), list(String.t())) ::
+  @spec save(item(), list(String.t())) ::
           {:ok, Item.t()} | {:error, :field_validation, list(FieldValidationError.t())}
-  def create(item, tag_names \\ []) do
-    tags = tags().upsert_all(tag_names)
+  def save(item, tag_names \\ []) do
+    tags = tags().save_all(tag_names)
 
-    case items().create(item, tags) do
+    case ItemRepository.create(item, tags) do
       {:ok, item} ->
         {:ok, item}
 
@@ -30,5 +32,4 @@ defmodule Kolektanto.Item.Context do
   end
 
   defp tags, do: Application.get_env(:kolektanto, :tags)
-  defp items, do: Application.get_env(:kolektanto, :items)
 end

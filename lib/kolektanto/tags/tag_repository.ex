@@ -1,15 +1,13 @@
-defmodule Kolektanto.Tag.Tags do
+defmodule Kolektanto.Tags.TagRepository do
   @moduledoc """
-  Access tag data
+  Data access operations for Tag
   """
+
   alias Kolektanto.Repo
-  alias Kolektanto.Tag
+  alias Kolektanto.Tags.Tag
 
   import Ecto.Query
 
-  @behaviour Kolektanto.Tag.Tags.Behaviour
-
-  @impl true
   @spec upsert_all(list(String.t())) :: list(Tag.t())
   def upsert_all(names) when is_list(names) do
     placeholders = get_placeholders()
