@@ -19,15 +19,8 @@ defmodule Kolektanto.Items do
   @spec save(item(), list(String.t())) ::
           {:ok, Item.t()} | {:error, :field_validation, list(FieldValidationError.t())}
   def save(item, tag_names \\ []) do
-    tags = tags().save_all(tag_names)
-
-    case ItemRepository.create(item, tags) do
-      {:ok, item} ->
-        {:ok, item}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        errors = FieldValidationError.build_from(changeset)
-        {:error, :field_validation, errors}
+    with {:ok, tags} <- tags().save_all(tag_names) do
+      ItemRepository.create(item, tags)
     end
   end
 

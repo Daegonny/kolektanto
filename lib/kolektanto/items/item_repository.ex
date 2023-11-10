@@ -13,15 +13,17 @@ defmodule Kolektanto.Items.ItemRepository do
     |> Item.changeset(attrs)
     |> Ecto.Changeset.put_assoc(:tags, tags)
     |> Repo.insert()
+    |> Repo.normalize_result()
   end
 
   @spec get(binary()) :: {:ok, Kolektanto.Item.t()} | {:error, :not_found}
   def get(item_id) do
-    case Repo.get(Item, item_id) do
-      %Item{} = item -> {:ok, preload_tags(item)}
-      nil -> {:error, :not_found}
-    end
+    Item
+    |> Repo.get(item_id)
+    |> preload_tags()
+    |> Repo.normalize_result()
   end
 
+  defp preload_tags(nil), do: nil
   defp preload_tags(item), do: Repo.preload(item, :tags)
 end

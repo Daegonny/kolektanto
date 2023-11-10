@@ -1,7 +1,7 @@
 defmodule Kolektanto.ItemsTest do
   @moduledoc false
   use Kolektanto.DataCase, async: true
-  import Mox
+  import Hammox
 
   alias Kolektanto.Errors.FieldValidationError
 
@@ -25,7 +25,7 @@ defmodule Kolektanto.ItemsTest do
       name = "item 1"
       attrs = %{"name" => name}
 
-      stub(TagsMock, :save_all, fn _ -> [] end)
+      stub(TagsMock, :save_all, fn _ -> {:ok, []} end)
 
       assert {:ok, %Item{name: ^name, tags: []}} = Items.save(attrs)
     end
@@ -34,7 +34,7 @@ defmodule Kolektanto.ItemsTest do
       tag_names = ["red", "big"]
       tags = Enum.map(tag_names, &build(:tag, name: &1))
 
-      stub(TagsMock, :save_all, fn ^tag_names -> tags end)
+      stub(TagsMock, :save_all, fn ^tag_names -> {:ok, tags} end)
 
       name = "item 1"
       attrs = %{"name" => name}
@@ -47,7 +47,7 @@ defmodule Kolektanto.ItemsTest do
     end
 
     test "returns error when name is not given" do
-      stub(TagsMock, :save_all, fn _ -> [] end)
+      stub(TagsMock, :save_all, fn _ -> {:ok, []} end)
 
       assert {:error, :field_validation,
               [

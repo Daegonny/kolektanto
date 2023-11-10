@@ -8,5 +8,5 @@ defmodule Kolektanto.Tags.Behaviour do
   Given a list of tag names persist them
   without duplicity
   """
-  @callback save_all(list(String.t())) :: list(Tag.t())
+  @callback save_all(list(String.t())) :: {:ok, list(Tag.t())}
 end

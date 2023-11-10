@@ -10,5 +10,5 @@ defmodule Kolektanto.Tags do
 
   @impl true
   @spec save_all(list(String.t())) :: {:ok, list(Tag.t())}
-  def save_all(names), do: {:ok, TagRepository.upsert_all(names)}
+  def save_all(names), do: TagRepository.upsert_all(names)
 end

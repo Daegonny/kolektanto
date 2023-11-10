@@ -8,7 +8,9 @@ defmodule Kolektanto.Tags.TagRepository do
 
   import Ecto.Query
 
-  @spec upsert_all(list(String.t())) :: list(Tag.t())
+  @spec upsert_all(list(String.t())) :: {:ok, list(Tag.t())}
+  def upsert_all([]), do: {:ok, []}
+
   def upsert_all(names) when is_list(names) do
     placeholders = get_placeholders()
 
@@ -20,9 +22,10 @@ defmodule Kolektanto.Tags.TagRepository do
     )
 
     Repo.all(from t in Tag, where: t.name in ^names)
+    |> Repo.normalize_result()
   end
 
-  def upsert_all(_), do: []
+  def upsert_all(_), do: {:ok, []}
 
   defp map_tags(names) do
     Enum.map(

@@ -7,11 +7,11 @@ defmodule Kolektanto.Items.Item do
   alias Kolektanto.Tags.Tag
 
   @type t() :: %__MODULE__{
-          id: binary(),
+          id: binary() | nil,
           name: String.t(),
           tags: list(Tag.t()) | Ecto.Association.NotLoaded.t(),
-          inserted_at: NaiveDateTime.t(),
-          updated_at: NaiveDateTime.t()
+          inserted_at: NaiveDateTime.t() | nil,
+          updated_at: NaiveDateTime.t() | nil
         }
 
   @primary_key {:id, :binary_id, autogenerate: true}

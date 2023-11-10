@@ -1,7 +1,7 @@
 defmodule KolektantoWeb.ItemControllerTest do
   @moduledoc false
   use KolektantoWeb.ConnCase, async: true
-  import Mox
+  import Hammox
 
   describe "GET /items/:id" do
     test "returns 200 with item when it exists", %{conn: conn} do

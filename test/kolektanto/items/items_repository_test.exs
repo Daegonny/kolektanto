@@ -2,6 +2,7 @@ defmodule Kolektanto.Items.ItemsRepositoryTest do
   @moduledoc false
   use Kolektanto.DataCase, async: true
 
+  alias Kolektanto.Errors.FieldValidationError
   alias Kolektanto.Items.Item
   alias Kolektanto.Items.ItemRepository
 
@@ -19,10 +20,14 @@ defmodule Kolektanto.Items.ItemsRepositoryTest do
 
     test "returns errors when name is not given" do
       tags = insert_list(3, :tag)
-      assert {:error, changeset} = ItemRepository.create(%{}, tags)
 
-      refute changeset.valid?
-      assert [name: {"can't be blank", [validation: :required]}] = changeset.errors
+      assert {:error, :field_validation,
+              [
+                %FieldValidationError{
+                  field: :name,
+                  messages: ["can't be blank"]
+                }
+              ]} = ItemRepository.create(%{}, tags)
     end
   end
 

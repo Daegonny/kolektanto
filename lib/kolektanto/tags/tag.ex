@@ -5,10 +5,10 @@ defmodule Kolektanto.Tags.Tag do
   use Ecto.Schema
 
   @type t() :: %__MODULE__{
-          id: binary(),
+          id: binary() | nil,
           name: String.t(),
-          inserted_at: NaiveDateTime.t(),
-          updated_at: NaiveDateTime.t()
+          inserted_at: NaiveDateTime.t() | nil,
+          updated_at: NaiveDateTime.t() | nil
         }
 
   @primary_key {:id, :binary_id, autogenerate: true}
