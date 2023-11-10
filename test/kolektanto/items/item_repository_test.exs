@@ -1,4 +1,4 @@
-defmodule Kolektanto.Items.ItemsRepositoryTest do
+defmodule Kolektanto.Items.ItemRepositoryTest do
   @moduledoc false
   use Kolektanto.DataCase, async: true
 
