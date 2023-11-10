@@ -9,6 +9,6 @@ defmodule Kolektanto.Tags do
   @behaviour Kolektanto.Tags.Behaviour
 
   @impl true
-  @spec save_all(list(String.t())) :: list(Tag.t())
-  def save_all(names), do: TagRepository.upsert_all(names)
+  @spec save_all(list(String.t())) :: {:ok, list(Tag.t())}
+  def save_all(names), do: {:ok, TagRepository.upsert_all(names)}
 end

@@ -7,7 +7,7 @@ defmodule Kolektanto.TagsTest do
     test "persists tags without duplicity and returns them" do
       names = ["red", "red", "blue", "big", "blue", "small"]
       unique_names = Enum.uniq(names)
-      tags = Tags.save_all(names)
+      {:ok, tags} = Tags.save_all(names)
 
       assert Enum.count(tags) == Enum.count(unique_names)
 
@@ -20,14 +20,21 @@ defmodule Kolektanto.TagsTest do
     test "tags are created only once" do
       tag_names = ["large", "green", "expansive"]
 
-      tags_1 = Tags.save_all(tag_names) |> MapSet.new()
-      tags_2 = Tags.save_all(tag_names) |> MapSet.new()
+      tags_1 =
+        Tags.save_all(tag_names)
+        |> then(fn {:ok, result} -> result end)
+        |> MapSet.new()
+
+      tags_2 =
+        Tags.save_all(tag_names)
+        |> then(fn {:ok, result} -> result end)
+        |> MapSet.new()
 
       assert MapSet.equal?(tags_1, tags_2)
     end
 
     test "returns empty list when a list of names is not received" do
-      assert [] = Tags.save_all("red")
+      assert {:ok, []} = Tags.save_all("red")
     end
   end
 end
