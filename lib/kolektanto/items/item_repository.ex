@@ -5,7 +5,9 @@ defmodule Kolektanto.Items.ItemRepository do
 
   alias Kolektanto.Items.Item
   alias Kolektanto.Items.ItemQueries
+  alias Kolektanto.Items.ItemFilter
   alias Kolektanto.Repo
+  alias Kolektanto.Repo.Pages.Page
   alias Kolektanto.Tags.Tag
 
   @spec create(map(), list(Tag.t())) :: {:ok, Item.t()} | {:error, Ecto.Changeset.t()}
@@ -25,16 +27,10 @@ defmodule Kolektanto.Items.ItemRepository do
     |> Repo.normalize_result()
   end
 
-  def containing_any_tags(tag_names) do
-    ItemQueries.containing_any_tags(tag_names)
-    |> Repo.all()
-    |> Repo.normalize_result()
-  end
-
-  def containing_all_tags(tag_names) do
-    ItemQueries.containing_all_tags(tag_names)
-    |> Repo.all()
-    |> Repo.normalize_result()
+  @spec list(ItemFilter.t(), non_neg_integer(), non_neg_integer()) :: Page.t()
+  def list(%ItemFilter{} = filter, page \\ 1, page_size \\ 10) do
+    ItemQueries.build(filter)
+    |> Repo.Pages.paginate(page, page_size)
   end
 
   defp preload_tags(nil), do: nil

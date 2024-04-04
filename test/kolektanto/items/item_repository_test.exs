@@ -4,6 +4,7 @@ defmodule Kolektanto.Items.ItemRepositoryTest do
 
   alias Kolektanto.Errors.FieldValidationError
   alias Kolektanto.Items.Item
+  alias Kolektanto.Items.ItemFilter
   alias Kolektanto.Items.ItemRepository
 
   describe "create/2" do
@@ -45,63 +46,68 @@ defmodule Kolektanto.Items.ItemRepositoryTest do
     end
   end
 
-  describe "containing_any_tags/1" do
+  describe "list/1" do
     setup :setup_items_tags
 
-    test "filters only items with any of the given tags", %{
-      item_a_b: item_a_b,
-      item_a: item_a,
-      item_b_c: item_b_c
-    } do
-      {:ok, items} = ItemRepository.containing_any_tags(["a", "c"])
+    test "filters only items with one of the given tags",
+         %{item_a: item_a, item_b: item_b, item_d: item_d} do
+      filter = %ItemFilter{
+        tags_must_have_one: ["red", "blue"]
+      }
+
+      assert %{entries: items} = ItemRepository.list(filter)
 
       assert Enum.count(items) == 3
-
-      result_item_a_b = Enum.find(items, fn item -> item.id == item_a_b.id end)
-      result_item_a = Enum.find(items, fn item -> item.id == item_a.id end)
-      result_item_b_c = Enum.find(items, fn item -> item.id == item_b_c.id end)
-
-      refute is_nil(result_item_a_b)
-      refute is_nil(result_item_a)
-      refute is_nil(result_item_b_c)
-
-      assert Enum.count(result_item_a_b.tags) == 2
-      assert Enum.count(result_item_a.tags) == 1
-      assert Enum.count(result_item_b_c.tags) == 2
+      assert Enum.find(items, &(&1.name == item_a.name))
+      assert Enum.find(items, &(&1.name == item_b.name))
+      assert Enum.find(items, &(&1.name == item_d.name))
     end
-  end
 
-  describe "containing_all_tags/1" do
-    setup :setup_items_tags
+    test "filters only items with all of the given tags",
+         %{item_a: item_a, item_b: item_b, item_c: item_c} do
+      filter = %ItemFilter{
+        tags_must_have_all: ["summer", "day"]
+      }
 
-    test "filters only items with all of the given tags", %{
-      item_a_b: item_a_b
-    } do
-      {:ok, items} = ItemRepository.containing_all_tags(["a", "b"])
+      assert %{entries: items} = ItemRepository.list(filter)
+      assert Enum.count(items) == 3
+      assert Enum.find(items, &(&1.name == item_a.name))
+      assert Enum.find(items, &(&1.name == item_b.name))
+      assert Enum.find(items, &(&1.name == item_c.name))
+    end
 
-      assert Enum.count(items) == 1
-      result_item_a_b = Enum.find(items, fn item -> item.id == item_a_b.id end)
-      refute is_nil(result_item_a_b)
-      assert Enum.count(result_item_a_b.tags) == 2
+    test "filters all items tagged as summer, day and (red or blue)",
+         %{item_a: item_a, item_b: item_b} do
+      filter = %ItemFilter{
+        tags_must_have_one: ["red", "blue"],
+        tags_must_have_all: ["summer", "day"]
+      }
+
+      assert %{entries: items} = ItemRepository.list(filter)
+
+      assert Enum.count(items) == 2
+      assert Enum.find(items, &(&1.name == item_a.name))
+      assert Enum.find(items, &(&1.name == item_b.name))
     end
   end
 
   defp setup_items_tags(%{}) do
-    tag_a = insert(:tag, name: "a")
-    tag_b = insert(:tag, name: "b")
-    tag_c = insert(:tag, name: "c")
+    summer = insert(:tag, name: "summer")
+    _fall = insert(:tag, name: "fall")
+    _winter = insert(:tag, name: "winter")
 
-    item_a_b = insert(:item, tags: [tag_a, tag_b])
-    item_a = insert(:item, tags: [tag_a])
-    item_b = insert(:item, tags: [tag_b])
-    item_b_c = insert(:item, tags: [tag_b, tag_c])
-    insert(:item)
+    red = insert(:tag, name: "red")
+    blue = insert(:tag, name: "blue")
+    purple = insert(:tag, name: "purple")
 
-    %{
-      item_a_b: item_a_b,
-      item_a: item_a,
-      item_b: item_b,
-      item_b_c: item_b_c
-    }
+    day = insert(:tag, name: "day")
+    night = insert(:tag, name: "night")
+
+    item_a = insert(:item, name: "a", tags: [summer, red, day])
+    item_b = insert(:item, name: "b", tags: [summer, blue, day])
+    item_c = insert(:item, name: "c", tags: [summer, purple, day])
+    item_d = insert(:item, name: "d", tags: [summer, red, night])
+
+    %{item_a: item_a, item_b: item_b, item_c: item_c, item_d: item_d}
   end
 end
