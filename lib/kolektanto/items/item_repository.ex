@@ -4,6 +4,7 @@ defmodule Kolektanto.Items.ItemRepository do
   """
 
   alias Kolektanto.Items.Item
+  alias Kolektanto.Items.ItemQueries
   alias Kolektanto.Repo
   alias Kolektanto.Tags.Tag
 
@@ -21,6 +22,18 @@ defmodule Kolektanto.Items.ItemRepository do
     Item
     |> Repo.get(item_id)
     |> preload_tags()
+    |> Repo.normalize_result()
+  end
+
+  def containing_any_tags(tag_names) do
+    ItemQueries.containing_any_tags(tag_names)
+    |> Repo.all()
+    |> Repo.normalize_result()
+  end
+
+  def containing_all_tags(tag_names) do
+    ItemQueries.containing_all_tags(tag_names)
+    |> Repo.all()
     |> Repo.normalize_result()
   end
 

@@ -45,64 +45,63 @@ defmodule Kolektanto.Items.ItemRepositoryTest do
     end
   end
 
-  # describe "filter_with_any_tags/1" do
-  #   setup :setup_items_tags
+  describe "containing_any_tags/1" do
+    setup :setup_items_tags
 
-  #   test "filters only items with any of the given tags", %{
-  #     item_a_b: item_a_b,
-  #     item_a: item_a,
-  #     item_b_c: item_b_c
-  #   } do
-  #     {:ok, items} = Items.filter_with_any_tags(["a", "c"])
+    test "filters only items with any of the given tags", %{
+      item_a_b: item_a_b,
+      item_a: item_a,
+      item_b_c: item_b_c
+    } do
+      {:ok, items} = ItemRepository.containing_any_tags(["a", "c"])
 
-  #     assert Enum.count(items) == 3
+      assert Enum.count(items) == 3
 
-  #     result_item_a_b = Enum.find(items, fn item -> item.id == item_a_b.id end)
-  #     result_item_a = Enum.find(items, fn item -> item.id == item_a.id end)
-  #     result_item_b_c = Enum.find(items, fn item -> item.id == item_b_c.id end)
+      result_item_a_b = Enum.find(items, fn item -> item.id == item_a_b.id end)
+      result_item_a = Enum.find(items, fn item -> item.id == item_a.id end)
+      result_item_b_c = Enum.find(items, fn item -> item.id == item_b_c.id end)
 
-  #     refute is_nil(result_item_a_b)
-  #     refute is_nil(result_item_a)
-  #     refute is_nil(result_item_b_c)
+      refute is_nil(result_item_a_b)
+      refute is_nil(result_item_a)
+      refute is_nil(result_item_b_c)
 
-  #     assert Enum.count(result_item_a_b.tags) == 2
-  #     assert Enum.count(result_item_a.tags) == 1
-  #     assert Enum.count(result_item_b_c.tags) == 2
-  #   end
-  # end
+      assert Enum.count(result_item_a_b.tags) == 2
+      assert Enum.count(result_item_a.tags) == 1
+      assert Enum.count(result_item_b_c.tags) == 2
+    end
+  end
 
-  # describe "filter_with_all_tags/1" do
-  #   setup :setup_items_tags
+  describe "containing_all_tags/1" do
+    setup :setup_items_tags
 
-  #   test "filters only items with all of the given tags", %{
-  #     item_a_b: item_a_b
-  #   } do
-  #     {:ok, items} = Items.filter_with_all_tags(["a", "b"])
+    test "filters only items with all of the given tags", %{
+      item_a_b: item_a_b
+    } do
+      {:ok, items} = ItemRepository.containing_all_tags(["a", "b"])
 
-  #     assert Enum.count(items) == 1
-  #     result_item_a_b = Enum.find(items, fn item -> item.id == item_a_b.id end)
-  #     refute is_nil(result_item_a_b)
-  #     assert Enum.count(result_item_a_b.tags) == 2
-  #   end
-  # end
+      assert Enum.count(items) == 1
+      result_item_a_b = Enum.find(items, fn item -> item.id == item_a_b.id end)
+      refute is_nil(result_item_a_b)
+      assert Enum.count(result_item_a_b.tags) == 2
+    end
+  end
 
-  # defp setup_items_tags(%{}) do
-  #   tag_a = insert(:tag, name: "a")
-  #   tag_b = insert(:tag, name: "b")
-  #   tag_c = insert(:tag, name: "c")
+  defp setup_items_tags(%{}) do
+    tag_a = insert(:tag, name: "a")
+    tag_b = insert(:tag, name: "b")
+    tag_c = insert(:tag, name: "c")
 
-  #   item_a_b = insert(:item, tags: [tag_a, tag_b])
-  #   item_a = insert(:item, tags: [tag_a])
-  #   item_b_c = insert(:item, tags: [tag_b, tag_c])
-  #   insert(:item)
+    item_a_b = insert(:item, tags: [tag_a, tag_b])
+    item_a = insert(:item, tags: [tag_a])
+    item_b = insert(:item, tags: [tag_b])
+    item_b_c = insert(:item, tags: [tag_b, tag_c])
+    insert(:item)
 
-  #   %{
-  #     tag_a: tag_a,
-  #     tag_b: tag_b,
-  #     tag_c: tag_c,
-  #     item_a_b: item_a_b,
-  #     item_a: item_a,
-  #     item_b_c: item_b_c
-  #   }
-  # end
+    %{
+      item_a_b: item_a_b,
+      item_a: item_a,
+      item_b: item_b,
+      item_b_c: item_b_c
+    }
+  end
 end
