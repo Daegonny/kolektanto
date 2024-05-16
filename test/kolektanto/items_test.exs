@@ -8,15 +8,15 @@ defmodule Kolektanto.ItemsTest do
   alias Kolektanto.Items.Item
   alias Kolektanto.Items
 
-  describe "get/1" do
+  describe "fetch/1" do
     test "returns item when it exists" do
       %Item{id: id} = insert(:item)
-      assert {:ok, %Item{id: ^id}} = Items.get(id)
+      assert {:ok, %Item{id: ^id}} = Items.fetch(id)
     end
 
     test "returns error not found when item does not exist" do
       id = Faker.UUID.v4()
-      assert {:error, :not_found} = Items.get(id)
+      assert {:error, :not_found} = Items.fetch(id)
     end
   end
 

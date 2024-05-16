@@ -6,7 +6,7 @@ defmodule KolektantoWeb.ItemController do
   action_fallback KolektantoWeb.FallbackController
 
   def show(conn, %{"id" => id}) do
-    with {:ok, item} <- items().get(id) do
+    with {:ok, item} <- items().fetch(id) do
       render(conn, "show.json", item: item)
     end
   end

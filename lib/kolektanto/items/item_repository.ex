@@ -18,8 +18,8 @@ defmodule Kolektanto.Items.ItemRepository do
     |> Repo.normalize_result()
   end
 
-  @spec get(binary()) :: {:ok, Kolektanto.Item.t()} | {:error, :not_found}
-  def get(item_id) do
+  @spec fetch(binary()) :: {:ok, Kolektanto.Item.t()} | {:error, :not_found}
+  def fetch(item_id) do
     Item
     |> Repo.get(item_id)
     |> preload_tags()

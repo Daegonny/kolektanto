@@ -31,17 +31,17 @@ defmodule Kolektanto.Items.ItemRepositoryTest do
     end
   end
 
-  describe "get/1" do
+  describe "fetch/1" do
     test "returns item with its tags given an id" do
       item = insert(:item)
-      assert {:ok, inserted_item} = ItemRepository.get(item.id)
+      assert {:ok, inserted_item} = ItemRepository.fetch(item.id)
 
       assert item == inserted_item
     end
 
     test "returns error tuple when item is not found" do
       non_existing_id = Faker.UUID.v4()
-      assert {:error, :not_found} = ItemRepository.get(non_existing_id)
+      assert {:error, :not_found} = ItemRepository.fetch(non_existing_id)
     end
   end
 

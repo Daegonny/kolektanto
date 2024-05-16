@@ -12,7 +12,7 @@ defmodule Kolektanto.Items.Behaviour do
   @doc """
   Gets an item by id
   """
-  @callback get(id()) :: {:ok, Item.t()} | {:error, :not_found}
+  @callback fetch(id()) :: {:ok, Item.t()} | {:error, :not_found}
 
   @doc """
   Creates an item
