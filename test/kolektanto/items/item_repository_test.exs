@@ -4,7 +4,6 @@ defmodule Kolektanto.Items.ItemRepositoryTest do
 
   alias Kolektanto.Errors.FieldValidationError
   alias Kolektanto.Items.Item
-  alias Kolektanto.Items.ItemFilter
   alias Kolektanto.Items.ItemRepository
 
   describe "create/2" do
@@ -51,11 +50,11 @@ defmodule Kolektanto.Items.ItemRepositoryTest do
 
     test "filters only items with one of the given tags",
          %{item_a: item_a, item_b: item_b, item_d: item_d} do
-      filter = %ItemFilter{
-        tags_must_have_one: ["red", "blue"]
+      opts = %{
+        having_one_of_tags: ["red", "blue"]
       }
 
-      assert %{entries: items} = ItemRepository.list(filter)
+      assert %{entries: items} = ItemRepository.list(opts)
 
       assert Enum.count(items) == 3
       assert Enum.find(items, &(&1.name == item_a.name))
@@ -65,11 +64,11 @@ defmodule Kolektanto.Items.ItemRepositoryTest do
 
     test "filters only items with all of the given tags",
          %{item_a: item_a, item_b: item_b, item_c: item_c} do
-      filter = %ItemFilter{
-        tags_must_have_all: ["summer", "day"]
+      opts = %{
+        having_all_tags: ["summer", "day"]
       }
 
-      assert %{entries: items} = ItemRepository.list(filter)
+      assert %{entries: items} = ItemRepository.list(opts)
       assert Enum.count(items) == 3
       assert Enum.find(items, &(&1.name == item_a.name))
       assert Enum.find(items, &(&1.name == item_b.name))
@@ -78,12 +77,12 @@ defmodule Kolektanto.Items.ItemRepositoryTest do
 
     test "filters all items tagged as summer, day and (red or blue)",
          %{item_a: item_a, item_b: item_b} do
-      filter = %ItemFilter{
-        tags_must_have_one: ["red", "blue"],
-        tags_must_have_all: ["summer", "day"]
+      opts = %{
+        having_one_of_tags: ["red", "blue"],
+        having_all_tags: ["summer", "day"]
       }
 
-      assert %{entries: items} = ItemRepository.list(filter)
+      assert %{entries: items} = ItemRepository.list(opts)
 
       assert Enum.count(items) == 2
       assert Enum.find(items, &(&1.name == item_a.name))

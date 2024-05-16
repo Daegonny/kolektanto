@@ -5,7 +5,6 @@ defmodule Kolektanto.Items.ItemRepository do
 
   alias Kolektanto.Items.Item
   alias Kolektanto.Items.ItemQueries
-  alias Kolektanto.Items.ItemFilter
   alias Kolektanto.Repo
   alias Kolektanto.Repo.Pages.Page
   alias Kolektanto.Tags.Tag
@@ -27,9 +26,9 @@ defmodule Kolektanto.Items.ItemRepository do
     |> Repo.normalize_result()
   end
 
-  @spec list(ItemFilter.t(), non_neg_integer(), non_neg_integer()) :: Page.t()
-  def list(%ItemFilter{} = filter, page \\ 1, page_size \\ 10) do
-    ItemQueries.build(filter)
+  @spec list(map(), non_neg_integer(), non_neg_integer()) :: Page.t()
+  def list(opts, page \\ 1, page_size \\ 10) do
+    ItemQueries.build(opts)
     |> Repo.Pages.paginate(page, page_size)
   end
 
