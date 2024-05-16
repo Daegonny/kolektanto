@@ -6,16 +6,15 @@ defmodule Kolektanto.Items.ItemQueries do
 
   import Ecto.Query
 
+  @spec build(map()) :: Ecto.Query.t()
   def build(params) do
     base_query()
     |> filter(params)
+    |> sort_by_newer_first()
     |> preload_tags()
   end
 
-  defp base_query do
-    from(item in Item, as: :item, distinct: true)
-    |> join(:inner, [item: item], tag in assoc(item, :tags), as: :tag)
-  end
+  defp base_query, do: from(item in Item, as: :item)
 
   defp filter(query, params) do
     query
@@ -80,6 +79,8 @@ defmodule Kolektanto.Items.ItemQueries do
 
     from(q in query, join: t in subquery(tags_query), on: q.id == t.id)
   end
+
+  defp sort_by_newer_first(query), do: order_by(query, [item: item], desc: item.inserted_at)
 
   defp preload_tags(query), do: preload(query, [:tags])
 end

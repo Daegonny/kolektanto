@@ -88,6 +88,17 @@ defmodule Kolektanto.Items.ItemRepositoryTest do
       assert Enum.find(items, &(&1.name == item_a.name))
       assert Enum.find(items, &(&1.name == item_b.name))
     end
+
+    test "items are sorted by inserted_at desc" do
+      assert %{
+               entries: [
+                 %{name: "d"},
+                 %{name: "c"},
+                 %{name: "b"},
+                 %{name: "a"}
+               ]
+             } = ItemRepository.list()
+    end
   end
 
   defp setup_items_tags(%{}) do
