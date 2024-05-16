@@ -39,10 +39,6 @@ defmodule Kolektanto.Tags.TagRepository do
   end
 
   defp get_placeholders() do
-    timestamp =
-      NaiveDateTime.utc_now()
-      |> NaiveDateTime.truncate(:second)
-
-    %{timestamp: timestamp}
+    %{timestamp: DateTime.utc_now()}
   end
 end

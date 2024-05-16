@@ -5,7 +5,7 @@ defmodule Kolektanto.Repo.Migrations.CreateTagsTable do
     create table(:tags, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :name, :string
-      timestamps()
+      timestamps(type: :utc_datetime_usec)
     end
 
     create unique_index(:tags, [:name])

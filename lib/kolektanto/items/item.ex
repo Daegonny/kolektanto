@@ -10,15 +10,15 @@ defmodule Kolektanto.Items.Item do
           id: binary() | nil,
           name: String.t(),
           tags: list(Tag.t()) | Ecto.Association.NotLoaded.t(),
-          inserted_at: NaiveDateTime.t() | nil,
-          updated_at: NaiveDateTime.t() | nil
+          inserted_at: DateTime.t() | nil,
+          updated_at: DateTime.t() | nil
         }
 
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "items" do
     field :name
     many_to_many :tags, Tag, join_through: "items_tags", on_replace: :delete
-    timestamps()
+    timestamps(type: :utc_datetime_usec)
   end
 
   def changeset(struct, params \\ %{}) do

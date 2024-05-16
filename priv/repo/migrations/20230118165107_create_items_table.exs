@@ -5,7 +5,7 @@ defmodule Kolektanto.Repo.Migrations.CreateItemsTable do
     create table(:items, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :name, :string
-      timestamps()
+      timestamps(type: :utc_datetime_usec)
     end
   end
 end
