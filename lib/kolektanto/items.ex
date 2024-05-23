@@ -7,12 +7,17 @@ defmodule Kolektanto.Items do
   alias Kolektanto.Items.Item
   alias Kolektanto.Items.ItemRepository
   alias Kolektanto.Errors.FieldValidationError
+  alias Kolektanto.Repo.Pages.Page
 
   @behaviour Kolektanto.Items.Behaviour
 
   @impl true
   @spec fetch(Behaviour.id()) :: {:ok, Item.t()} | {:error, :not_found}
   def fetch(id), do: ItemRepository.fetch(id)
+
+  @impl true
+  @spec list(Behaviour.opts()) :: Page.t()
+  def list(opts), do: ItemRepository.list(opts)
 
   @impl true
   @spec save(Behaviour.item()) ::

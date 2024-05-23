@@ -7,6 +7,7 @@ defmodule Kolektanto.ItemsTest do
 
   alias Kolektanto.Items.Item
   alias Kolektanto.Items
+  alias Kolektanto.Repo.Pages.Page
 
   describe "fetch/1" do
     test "returns item when it exists" do
@@ -17,6 +18,20 @@ defmodule Kolektanto.ItemsTest do
     test "returns error not found when item does not exist" do
       id = Faker.UUID.v4()
       assert {:error, :not_found} = Items.fetch(id)
+    end
+  end
+
+  describe "list/1" do
+    test "returns a page structure containing a list of possibly filtered items" do
+      %Item{id: id} = insert(:item, name: "item_a")
+      insert(:item, name: "item_b")
+
+      assert %Page{
+               entries: [%Item{id: ^id, name: "item_a"}],
+               current_page: 1,
+               page_size: 10,
+               total_pages: 1
+             } = Items.list(%{name: "item_a"})
     end
   end
 
