@@ -26,10 +26,10 @@ defmodule Kolektanto.Items.ItemRepository do
     |> Repo.normalize_result()
   end
 
-  @spec list(map(), non_neg_integer(), non_neg_integer()) :: Page.t()
-  def list(opts \\ %{}, page \\ 1, page_size \\ 10) do
+  @spec list(map()) :: Page.t()
+  def list(opts \\ %{}) do
     ItemQueries.build(opts)
-    |> Repo.Pages.paginate(page, page_size)
+    |> Repo.Pages.paginate(opts)
   end
 
   defp preload_tags(nil), do: nil

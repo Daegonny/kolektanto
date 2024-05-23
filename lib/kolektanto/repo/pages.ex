@@ -9,12 +9,9 @@ defmodule Kolektanto.Repo.Pages do
   alias Kolektanto.Repo.Pages.Page
   alias Kolektanto.Repo
 
-  @default_page 1
-  @default_page_size 10
-
-  @spec paginate(Ecto.Query.t(), non_neg_integer(), non_neg_integer()) :: Page.t()
-  def paginate(%Query{} = query, page \\ @default_page, page_size \\ @default_page_size) do
-    opts = PaginationOptions.build(page, page_size)
+  @spec paginate(Ecto.Query.t(), map()) :: Page.t()
+  def paginate(%Query{} = query, params \\ %{}) do
+    opts = PaginationOptions.build(params)
     {limit, offset} = get_limit_offset(opts.page, opts.page_size)
     entries = get_entries(query, limit, offset)
     total_pages = get_total_pages(query, opts.page_size)
