@@ -1,6 +1,10 @@
 {
     "cSpell.words": [
         "defmock",
+        "subquery",
         "upsert"
+    ],
+    "cSpell.ignoreWords": [
+        "Hammox"
     ]
 }
