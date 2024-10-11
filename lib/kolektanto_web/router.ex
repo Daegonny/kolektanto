@@ -1,14 +1,24 @@
 defmodule KolektantoWeb.Router do
   use KolektantoWeb, :router
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  pipeline :browser do
+    plug :accepts, ["html"]
   end
 
-  scope "/api", KolektantoWeb do
-    pipe_through :api
+  pipeline :api do
+    plug :accepts, ["json"]
+    plug OpenApiSpex.Plug.PutApiSpec, module: KolektantoWeb.ApiSpec
+  end
 
-    get "/items/:id", ItemController, :show
+  scope "/" do
+    pipe_through :browser
+    get "/dev/docs", OpenApiSpex.Plug.SwaggerUI, path: "/api/openapi"
+  end
+
+  scope "/api" do
+    pipe_through :api
+    get "/openapi", OpenApiSpex.Plug.RenderSpec, []
+    get "/items/:id", KolektantoWeb.ItemController, :show
   end
 
   # Enables LiveDashboard only for development
