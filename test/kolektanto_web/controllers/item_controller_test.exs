@@ -22,10 +22,10 @@ defmodule KolektantoWeb.ItemControllerTest do
       id = Faker.UUID.v4()
       stub(ItemsMock, :fetch, fn _ -> {:error, :not_found} end)
 
-      assert %{"errors" => [%{"message" => "Not Found"}]} =
-               conn
-               |> get(~p"/api/items/#{id}")
-               |> json_response(404)
+      conn
+      |> get(~p"/api/items/#{id}")
+      |> json_response(404)
+      |> assert_schema("NotFoundResponse", KolektantoWeb.ApiSpec.spec())
     end
   end
 
