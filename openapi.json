@@ -1,1 +1,425 @@
-{"components":{"responses":{},"schemas":{"Item":{"description":"An Item of the app","example":{"id":"db970d8a-8364-42ed-9de4-232e7cac549a","inserted_at":"2017-09-12T12:34:55Z","name":"Yellow T-shirt","tags":["yellow","summer","day"],"updated_at":"2017-09-13T10:11:12Z"},"properties":{"id":{"description":"Item ID","type":"string","x-struct":null,"x-validate":null},"inserted_at":{"description":"Creation timestamp","format":"datetime","type":"string","x-struct":null,"x-validate":null},"name":{"description":"Item name","type":"string","x-struct":null,"x-validate":null},"tags":{"description":"Item tags","items":{"type":"string","x-struct":null,"x-validate":null},"type":"array","x-struct":null,"x-validate":null},"updated_at":{"description":"Update timestamp","format":"datetime","type":"string","x-struct":null,"x-validate":null}},"required":["id","name","name","tags","inserted_at","updated_at"],"title":"Item","type":"object","x-struct":"Elixir.KolektantoWeb.Schemas.Item","x-validate":null},"ItemResponse":{"description":"Response schema for single item","example":{"data":{"id":"db970d8a-8364-42ed-9de4-232e7cac549a","inserted_at":"2017-09-12T12:34:55Z","name":"Yellow T-shirt","tags":["yellow","summer","day"],"updated_at":"2017-09-13T10:11:12Z"}},"properties":{"data":{"$ref":"#/components/schemas/Item"}},"title":"ItemResponse","type":"object","x-struct":"Elixir.KolektantoWeb.Schemas.ItemResponse","x-validate":null}}},"info":{"title":"Kolektanto","version":"1.0"},"openapi":"3.0.0","paths":{"/api/items/{id}":{"get":{"callbacks":{},"deprecated":false,"description":"Show an item by ID","operationId":"ItemController.show","parameters":[{"description":"Item ID","example":"4c374ba9-d7ef-4c4d-8d5c-73308c5d748b","in":"path","name":"id","required":true,"schema":{"type":"string","x-struct":null,"x-validate":null}}],"responses":{"200":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ItemResponse"}}},"description":"Item"}},"summary":"Show item","tags":["items"]}}},"security":[],"servers":[{"url":"http://localhost:4000","variables":{}}],"tags":[]}
+{
+  "components": {
+    "responses": {},
+    "schemas": {
+      "Error": {
+        "description": "Error",
+        "example": {
+          "message": "Not Found"
+        },
+        "properties": {
+          "message": {
+            "description": "error message description",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "Error",
+        "type": "object",
+        "x-struct": "Elixir.KolektantoWeb.Schemas.Error",
+        "x-validate": null
+      },
+      "Item": {
+        "description": "An Item of the app",
+        "example": {
+          "id": "db970d8a-8364-42ed-9de4-232e7cac549a",
+          "name": "Yellow T-shirt",
+          "tags": [
+            "yellow",
+            "summer",
+            "day"
+          ]
+        },
+        "properties": {
+          "id": {
+            "description": "Item ID",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "name": {
+            "description": "Item name",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "tags": {
+            "description": "Item tags",
+            "items": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "tags"
+        ],
+        "title": "Item",
+        "type": "object",
+        "x-struct": "Elixir.KolektantoWeb.Schemas.Item",
+        "x-validate": null
+      },
+      "ItemResponse": {
+        "description": "Response schema for single item",
+        "example": {
+          "data": {
+            "id": "db970d8a-8364-42ed-9de4-232e7cac549a",
+            "name": "Yellow T-shirt",
+            "tags": [
+              "yellow",
+              "summer",
+              "day"
+            ]
+          }
+        },
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/Item"
+          }
+        },
+        "title": "ItemResponse",
+        "type": "object",
+        "x-struct": "Elixir.KolektantoWeb.Schemas.ItemResponse",
+        "x-validate": null
+      },
+      "ItemsPaginated": {
+        "description": "Response schema for a paginated items list",
+        "example": {
+          "current_page": 1,
+          "entries": [
+            {
+              "id": "db970d8a-8364-42ed-9de4-232e7cac549a",
+              "name": "Yellow T-shirt",
+              "tags": [
+                "yellow",
+                "summer",
+                "day"
+              ]
+            }
+          ],
+          "page_size": 10,
+          "total_pages": 1
+        },
+        "properties": {
+          "current_page": {
+            "description": "Current page",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "entries": {
+            "description": "Items",
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "page_size": {
+            "description": "# Items per page",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "total_pages": {
+            "description": "Total # of pages",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "ItemsPaginated",
+        "type": "object",
+        "x-struct": "Elixir.KolektantoWeb.Schemas.ItemsPaginated",
+        "x-validate": null
+      },
+      "ItemsResponse": {
+        "description": "Response schema for items list",
+        "example": {
+          "data": {
+            "current_page": 1,
+            "entries": [
+              {
+                "id": "db970d8a-8364-42ed-9de4-232e7cac549a",
+                "name": "Yellow T-shirt",
+                "tags": [
+                  "yellow",
+                  "summer",
+                  "day"
+                ]
+              }
+            ],
+            "page_size": 10,
+            "total_pages": 1
+          }
+        },
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ItemsPaginated"
+          }
+        },
+        "title": "ItemsResponse",
+        "type": "object",
+        "x-struct": "Elixir.KolektantoWeb.Schemas.ItemsResponse",
+        "x-validate": null
+      },
+      "JsonErrorResponse": {
+        "properties": {
+          "errors": {
+            "items": {
+              "properties": {
+                "detail": {
+                  "example": "null value where string expected",
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "source": {
+                  "properties": {
+                    "pointer": {
+                      "example": "/data/attributes/petName",
+                      "type": "string",
+                      "x-struct": null,
+                      "x-validate": null
+                    }
+                  },
+                  "required": [
+                    "pointer"
+                  ],
+                  "type": "object",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "title": {
+                  "example": "Invalid value",
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                }
+              },
+              "required": [
+                "title",
+                "source",
+                "detail"
+              ],
+              "type": "object",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "errors"
+        ],
+        "title": "JsonErrorResponse",
+        "type": "object",
+        "x-struct": "Elixir.OpenApiSpex.JsonErrorResponse",
+        "x-validate": null
+      },
+      "NotFoundResponse": {
+        "description": "Resource not found",
+        "example": {
+          "errors": [
+            {
+              "message": "Not Found"
+            }
+          ]
+        },
+        "properties": {
+          "errors": {
+            "description": "errors",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "NotFoundResponse",
+        "type": "object",
+        "x-struct": "Elixir.KolektantoWeb.Schemas.NotFoundResponse",
+        "x-validate": null
+      }
+    }
+  },
+  "info": {
+    "title": "Kolektanto",
+    "version": "1.0"
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/items": {
+      "get": {
+        "callbacks": {},
+        "deprecated": false,
+        "description": "filtered and paginated",
+        "operationId": "ItemController.Index",
+        "parameters": [
+          {
+            "description": "Filter items containing this name",
+            "in": "query",
+            "name": "name",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Select page to return",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Set number of items per page",
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Filter items containing at least one of the given tags",
+            "explode": true,
+            "in": "query",
+            "name": "having_one_of_tags",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "type": "array",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "style": "form"
+          },
+          {
+            "description": "Filter items containing all of the given tags",
+            "explode": true,
+            "in": "query",
+            "name": "having_all_tags",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "type": "array",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "style": "form"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemsResponse"
+                }
+              }
+            },
+            "description": "Items"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JsonErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          }
+        },
+        "summary": "List items",
+        "tags": [
+          "items"
+        ]
+      }
+    },
+    "/api/items/{id}": {
+      "get": {
+        "callbacks": {},
+        "deprecated": false,
+        "description": "Show an item by ID",
+        "operationId": "ItemController.show",
+        "parameters": [
+          {
+            "description": "Item ID",
+            "example": "4c374ba9-d7ef-4c4d-8d5c-73308c5d748b",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemResponse"
+                }
+              }
+            },
+            "description": "Item"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            },
+            "description": "NotFound"
+          }
+        },
+        "summary": "Show item",
+        "tags": [
+          "items"
+        ]
+      }
+    }
+  },
+  "security": [],
+  "servers": [
+    {
+      "url": "http://localhost:4000",
+      "variables": {}
+    }
+  ],
+  "tags": []
+}
