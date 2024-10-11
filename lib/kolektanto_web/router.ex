@@ -18,7 +18,7 @@ defmodule KolektantoWeb.Router do
   scope "/api" do
     pipe_through :api
     get "/openapi", OpenApiSpex.Plug.RenderSpec, []
-    get "/items/:id", KolektantoWeb.ItemController, :show
+    resources "/items", KolektantoWeb.ItemController, only: [:index, :show]
   end
 
   # Enables LiveDashboard only for development

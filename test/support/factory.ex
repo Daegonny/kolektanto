@@ -5,6 +5,7 @@ defmodule Kolektanto.Factory do
   use ExMachina.Ecto, repo: Kolektanto.Repo
   alias Faker.{Pokemon, Vehicle}
   alias Kolektanto.Items.Item
+  alias Kolektanto.Repo.Pages.Page
   alias Kolektanto.Tags.Tag
 
   def item_factory do
@@ -17,6 +18,15 @@ defmodule Kolektanto.Factory do
   def tag_factory do
     %Tag{
       name: Pokemon.En.name()
+    }
+  end
+
+  def page_factory do
+    %Page{
+      entries: [],
+      current_page: 1,
+      page_size: 10,
+      total_pages: 1
     }
   end
 end
