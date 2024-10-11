@@ -28,7 +28,8 @@ defmodule Kolektanto.Items.ItemRepository do
 
   @spec list(map()) :: Page.t()
   def list(opts \\ %{}) do
-    ItemQueries.build(opts)
+    opts
+    |> ItemQueries.build()
     |> Repo.Pages.paginate(opts)
   end
 

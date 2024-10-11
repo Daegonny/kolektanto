@@ -32,7 +32,7 @@ defmodule Kolektanto.Items.ItemQueries do
 
   defp filter_name(query, name) do
     if is_binary(name) and bit_size(name) > 0 do
-      where(query, [item: item], item.name == ^name)
+      where(query, [item: item], ilike(item.name, ^"%#{name}%"))
     else
       query
     end
@@ -40,7 +40,8 @@ defmodule Kolektanto.Items.ItemQueries do
 
   defp having_one_of_tags(query, %{having_one_of_tags: tag_names}) do
     if is_list(tag_names) and Enum.any?(tag_names) do
-      filter_having_one_of_tags(query, tag_names)
+      unique_tag_names = Enum.uniq(tag_names)
+      filter_having_one_of_tags(query, unique_tag_names)
     else
       query
     end
@@ -59,7 +60,8 @@ defmodule Kolektanto.Items.ItemQueries do
 
   defp having_all_tags(query, %{having_all_tags: tag_names}) do
     if is_list(tag_names) and Enum.any?(tag_names) do
-      filter_having_all_tags(query, tag_names)
+      unique_tag_names = Enum.uniq(tag_names)
+      filter_having_all_tags(query, unique_tag_names)
     else
       query
     end

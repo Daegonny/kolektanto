@@ -89,6 +89,23 @@ defmodule Kolektanto.Items.ItemRepositoryTest do
       assert Enum.find(items, &(&1.name == item_b.name))
     end
 
+    test "duplicated item tags are removed",
+         %{item_a: item_a} do
+      opts = %{
+        having_all_tags: ["summer", "red", "day", "red"]
+      }
+
+      item_a_name = item_a.name
+
+      assert %{
+               entries: [
+                 %Item{
+                   name: ^item_a_name
+                 }
+               ]
+             } = ItemRepository.list(opts)
+    end
+
     test "items are sorted by inserted_at desc" do
       assert %{
                entries: [
